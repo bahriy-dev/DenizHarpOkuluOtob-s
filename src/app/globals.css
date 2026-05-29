@@ -13,7 +13,9 @@ html {
 }
 
 body {
-  background: var(--color-background);
+  background:
+    radial-gradient(circle at top right, rgba(255,255,255,0.04), transparent 30%),
+    #050505;
   color: var(--color-foreground);
   font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
