@@ -590,7 +590,7 @@ export default function DepartureBoard() {
         <div className="max-w-xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-[10px] text-[#8e8e93] font-semibold tracking-wide uppercase">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#30d158] shadow-[0_0_4px_#30d158]" />
-            <span>İETT Yolcu Bilgi Sistemi • Aktif</span>
+            <span>Bu proje Bahri YILMAZ tarafından yapılmıştır. • Aktif</span>
           </div>
 
           {/* Social Links */}
