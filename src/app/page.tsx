@@ -674,6 +674,7 @@ export default function DepartureBoard() {
                 </a>
               </div>
             </div>
+          </div>
         </div>
       </footer>
     </main>
