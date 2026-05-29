@@ -603,10 +603,10 @@ export default function DepartureBoard() {
 
               <div className="flex flex-col">
                 <span className="text-[8px] tracking-[0.25em] uppercase text-zinc-500 font-bold">
-                  Software Architecture
+                  YAZILIM MİMARİSİ
                 </span>
                 <p className="mt-0.5 text-[11px] sm:text-xs leading-relaxed text-zinc-300">
-                  Bu proje, modern yazılım mimarisi ve dijital deneyim odaklı yaklaşımıyla{" "}
+                  Bu proje{" "}
                   <span className="font-extrabold bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
                     Bahri YILMAZ
                   </span>{" "}
@@ -626,7 +626,7 @@ export default function DepartureBoard() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
                 </span>
-                <span>System Active • All Rights Reserved</span>
+                <span>SİSTEM AKTİF • TÜM HAKLARI SAKLIDIR</span>
               </div>
 
               {/* Social */}
