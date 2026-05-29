@@ -196,6 +196,7 @@ export default function DepartureBoard() {
   // API Loading & Base Schedules States
   const [baseDepartures, setBaseDepartures] = useState<BusDeparture[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [fetchedAtSimTime, setFetchedAtSimTime] = useState<Date | null>(null);
 
   const fetchDepartures = useCallback(async () => {
     setIsLoading(true);
@@ -208,6 +209,7 @@ export default function DepartureBoard() {
       console.log("Sefer Verileri (İlk 3 Araç):", JSON.parse(JSON.stringify(data.slice(0, 3))));
       console.log("=================================");
       setBaseDepartures(data);
+      setFetchedAtSimTime(new Date(simulatedTime.getTime()));
     } catch (err) {
       console.error("IETT API Fetch Error:", err);
     } finally {
@@ -252,13 +254,21 @@ export default function DepartureBoard() {
   // 2. Process all departures (base + custom, apply modifications)
   const activeDepartures = useMemo(() => {
     return baseDepartures.map((dep) => {
-      // Calculate seconds until departure
-      const [hours, minutes] = dep.departureTime.split(":").map(Number);
-      const departureDate = new Date(simulatedTime);
-      departureDate.setHours(hours, minutes, 0, 0);
+      let secondsRemaining = 0;
 
-      const diffMs = departureDate.getTime() - simulatedTime.getTime();
-      const secondsRemaining = Math.round(diffMs / 1000);
+      if (fetchedAtSimTime && typeof dep.secondsRemaining === "number") {
+        // Real-time calculation: live traffic remaining seconds minus elapsed simulation time
+        const elapsedSec = Math.round((simulatedTime.getTime() - fetchedAtSimTime.getTime()) / 1000);
+        secondsRemaining = Math.max(-180, dep.secondsRemaining - elapsedSec);
+      } else {
+        // Fallback to static schedule calculation
+        const [hours, minutes] = dep.departureTime.split(":").map(Number);
+        const departureDate = new Date(simulatedTime);
+        departureDate.setHours(hours, minutes, 0, 0);
+
+        const diffMs = departureDate.getTime() - simulatedTime.getTime();
+        secondsRemaining = Math.round(diffMs / 1000);
+      }
 
       // Compute expected departure time relative to simulated time
       const expectedDate = new Date(simulatedTime.getTime() + secondsRemaining * 1000);
@@ -270,7 +280,7 @@ export default function DepartureBoard() {
         expectedDepartureTime,
       };
     });
-  }, [simulatedTime, baseDepartures]);
+  }, [simulatedTime, baseDepartures, fetchedAtSimTime]);
 
   // 3. Filter and Sort departures
   const filteredDepartures = useMemo(() => {

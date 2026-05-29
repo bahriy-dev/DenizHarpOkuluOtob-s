@@ -24,8 +24,9 @@ export interface BusDeparture {
   departureTime: string; // Base departure time HH:mm format
   status: "normal" | "delayed" | "cancelled";
   delayMinutes: number;
-  stops: RouteStop[];
-  ourStopIndex: number;
+  stops?: RouteStop[];
+  ourStopIndex?: number;
+  secondsRemaining?: number;
 }
 
 // Route stops including "Deniz Harp Okulu"

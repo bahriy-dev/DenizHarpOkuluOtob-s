@@ -29,27 +29,35 @@ export class IETTService {
     stopCode: string,
     referenceTime: Date
   ): Promise<BusDeparture[]> {
-    // Simulate real network fetch latency
-    await this.delay(this.SIMULATED_LATENCY_MS);
+    // Introduce minimal latency for visual smooth load transitions
+    await this.delay(200);
 
-    // Format reference time to HH:MM
-    const refHours = String(referenceTime.getHours()).padStart(2, "0");
-    const refMinutes = String(referenceTime.getMinutes()).padStart(2, "0");
-    const referenceTimeStr = `${refHours}:${refMinutes}`;
+    try {
+      // Fetch live real-world IETT departures from our server-side API proxy
+      const res = await fetch(`/api/departures?stopCode=${stopCode}`);
+      if (res.ok) {
+        const liveDepartures = await res.json();
+        if (Array.isArray(liveDepartures) && liveDepartures.length > 0) {
+          console.log(`%c[İETT Service] Live real-world data loaded successfully for Stop: ${stopCode}`, "color: #30d158; font-weight: bold;");
+          return liveDepartures;
+        }
+      }
+      console.warn("[İETT Service] Live API returned empty or invalid structure. Falling back to mock schedules.");
+    } catch (error) {
+      console.warn("[İETT Service] Live API fetch failed. Falling back to mock schedules:", error);
+    }
 
-    // Filter and generate daily schedules dynamically
-    const allDepartures = this.generateDynamicSchedules();
-
+    // --- FALLBACK MOCK SCHEDULES GENERATOR ---
+    // This runs if you are offline or if the IETT server has issues
     // Upcoming departures (starting from current reference time)
+    const allDepartures = this.generateDynamicSchedules();
     const upcoming = allDepartures.filter((d) => {
-      // Keep departures that are up to 2 minutes in the past so passengers can see just-departed buses
       const [depHours, depMinutes] = d.departureTime.split(":").map(Number);
       const depTotalMin = depHours * 60 + depMinutes;
       const refTotalMin = referenceTime.getHours() * 60 + referenceTime.getMinutes();
       return depTotalMin >= refTotalMin - 2;
     });
 
-    // Sort by chronological order
     return upcoming.sort((a, b) => a.departureTime.localeCompare(b.departureTime));
   }
 
