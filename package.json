@@ -9,7 +9,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
-    "start": "node server.js"
+    "start": "node server.cjs"
   },
   "dependencies": {
     "react": "^18.2.0",
