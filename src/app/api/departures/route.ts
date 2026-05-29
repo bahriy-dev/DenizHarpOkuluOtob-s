@@ -22,7 +22,8 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "IETT server returned an error" }, { status: 500 });
     }
 
-    const html = await res.text();
+    const rawHtml = await res.text();
+    const html = decodeTurkishQuirks(rawHtml);
     const departures = parseIETTHtml(html);
 
     return NextResponse.json(departures);
@@ -30,6 +31,44 @@ export async function GET(request: Request) {
     console.error("IETT Proxy Scraper Error:", error);
     return NextResponse.json({ error: "Failed to scrape IETT data" }, { status: 500 });
   }
+}
+
+function decodeTurkishQuirks(text: string): string {
+  if (!text) return "";
+
+  // 1. Decode HTML decimal entities (e.g. &#214; -> Ö)
+  let decoded = text.replace(/&#(\d+);/g, (match, dec) => {
+    return String.fromCharCode(parseInt(dec, 10));
+  });
+
+  // 2. Fix double-encoded UTF-8 characters
+  const doubleEncodedMap: { [key: string]: string } = {
+    "Ä°": "İ",
+    "Ä±": "ı",
+    "Å": "ş",
+    "Å": "Ş",
+    "Ä": "ğ",
+    "Ä": "Ğ",
+    "Ã¼": "ü",
+    "Ã": "Ü",
+    "Ã¶": "ö",
+    "Ã": "Ö",
+    "Ã§": "ç",
+    "Ã": "Ç",
+    "Ã ": "à",
+    "Ã¢": "â",
+    "Ã©": "é",
+  };
+
+  for (const [bad, good] of Object.entries(doubleEncodedMap)) {
+    decoded = decoded.replaceAll(bad, good);
+  }
+
+  // 3. Fix specific broken strings (like replacement characters in known words)
+  decoded = decoded.replace(/DENZ/gi, "DENİZ");
+  decoded = decoded.replace(/\uFFFD/g, "İ"); // Fallback replacement character to dotted I
+
+  return decoded;
 }
 
 function parseIETTHtml(html: string): any[] {
