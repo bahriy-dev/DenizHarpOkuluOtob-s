@@ -21,7 +21,7 @@ export class IETTService {
   /**
    * Fetches active departures for a given stop code.
    * 
-   * @param stopCode The target stop code (e.g., "102283" for Deniz Harp Okulu)
+   * @param stopCode The target stop code (e.g., "225981" for Deniz Harp Okulu)
    * @param referenceTime The base simulated time to calculate upcoming departures
    * @returns List of active upcoming departures
    */

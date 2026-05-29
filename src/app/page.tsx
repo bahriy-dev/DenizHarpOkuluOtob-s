@@ -200,9 +200,9 @@ export default function DepartureBoard() {
   const fetchDepartures = useCallback(async () => {
     setIsLoading(true);
     try {
-      const data = await IETTService.getDeparturesForStop("102283", simulatedTime);
+      const data = await IETTService.getDeparturesForStop("225981", simulatedTime);
       console.log("%c=== İETT API CANLI VERİ AKIŞI ===", "color: #30d158; font-weight: bold; font-size: 12px;");
-      console.log(`Durak: Deniz Harp Okulu (102283)`);
+      console.log(`Durak: Deniz Harp Okulu (225981)`);
       console.log(`Sorgu Saati (GMT+3): ${simulatedTime.toLocaleTimeString("tr-TR")}`);
       console.log(`Gelen Sefer Sayısı: ${data.length}`);
       console.log("Sefer Verileri (İlk 3 Araç):", JSON.parse(JSON.stringify(data.slice(0, 3))));
@@ -332,7 +332,7 @@ export default function DepartureBoard() {
           {/* iOS Grouped List Header Label */}
           <div className="flex items-center justify-between px-1.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#8e8e93]">
             <span>Yaklaşan Seferler</span>
-            <span className="font-mono text-[9px] tracking-normal font-semibold">DURAK: 102283</span>
+            <span className="font-mono text-[9px] tracking-normal font-semibold">DURAK: 225981</span>
           </div>
 
           {/* Grouped Cards Stack */}
