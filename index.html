@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProjectFlow | Premium Proje Takip</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <!-- Inline SVG Sprite for Premium Icons -->
+  <svg style="display: none;">
+    <symbol id="icon-board" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+      <line x1="9" y1="3" x2="9" y2="21"/>
+      <line x1="15" y1="3" x2="15" y2="21"/>
+      <line x1="3" y1="9" x2="21" y2="9"/>
+      <line x1="3" y1="15" x2="21" y2="15"/>
+    </symbol>
+    <symbol id="icon-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="8" y1="6" x2="21" y2="6"/>
+      <line x1="8" y1="12" x2="21" y2="12"/>
+      <line x1="8" y1="18" x2="21" y2="18"/>
+      <line x1="3" y1="6" x2="3.01" y2="6"/>
+      <line x1="3" y1="12" x2="3.01" y2="12"/>
+      <line x1="3" y1="18" x2="3.01" y2="18"/>
+    </symbol>
+    <symbol id="icon-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+      <line x1="16" y1="2" x2="16" y2="6"/>
+      <line x1="8" y1="2" x2="8" y2="6"/>
+      <line x1="3" y1="10" x2="21" y2="10"/>
+    </symbol>
+    <symbol id="icon-add" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"/>
+      <line x1="5" y1="12" x2="19" y2="12"/>
+    </symbol>
+    <symbol id="icon-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+      <path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+    </symbol>
+    <symbol id="icon-delete" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="3 6 5 6 21 6"/>
+      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+      <line x1="10" y1="11" x2="10" y2="17"/>
+      <line x1="14" y1="11" x2="14" y2="17"/>
+    </symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
+    </symbol>
+    <symbol id="icon-logout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+      <polyline points="16 17 21 12 16 7"/>
+      <line x1="21" y1="12" x2="9" y2="12"/>
+    </symbol>
+    <symbol id="icon-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="12" y1="8" x2="12" y2="12"/>
+      <line x1="12" y1="16" x2="12.01" y2="16"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polyline points="12 6 12 12 16 14"/>
+    </symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"/>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </symbol>
+    <symbol id="icon-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+    </symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </symbol>
+    <symbol id="icon-project" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+    </symbol>
+    <symbol id="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"/>
+    </symbol>
+    <symbol id="icon-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </symbol>
+  </svg>
+
+  <!-- Success Sparkle Animation Overlay -->
+  <div id="successOverlay" class="success-overlay hidden">
+    <div class="sparkle-container"></div>
+  </div>
+
+  <!-- AUTH VIEW -->
+  <div id="authView" class="auth-shell">
+    <section class="auth-panel">
+      <div class="brand-lockup">
+        <span class="brand-mark">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </span>
+        <div>
+          <p class="eyebrow">Yazılımcı çalışma alanı</p>
+          <h1>ProjectFlow</h1>
+          <p class="brand-sub">Sprint, görev ve takvim notlarını tek yerde yönet.</p>
+        </div>
+      </div>
+
+      <div class="auth-tabs" role="tablist">
+        <button id="loginTab" class="active" type="button">Giriş Yap</button>
+        <button id="registerTab" type="button">Kayıt Ol</button>
+      </div>
+
+      <form id="authForm" class="auth-form">
+        <label id="nameField" class="hidden">
+          <span>Ad Soyad</span>
+          <div class="input-wrapper">
+            <svg class="input-icon"><use href="#icon-user"></use></svg>
+            <input id="nameInput" name="name" autocomplete="name" placeholder="Bahri Yılmaz">
+          </div>
+        </label>
+        <label>
+          <span>E-posta Adresi</span>
+          <div class="input-wrapper">
+            <span class="input-icon">@</span>
+            <input id="emailInput" name="email" type="email" autocomplete="email" placeholder="sen@firma.com" required>
+          </div>
+        </label>
+        <label>
+          <span>Parola</span>
+          <div class="input-wrapper">
+            <svg class="input-icon"><use href="#icon-lock" />
+              <path d="M180 80h-12v-16a6 6 0 1 0-12 0v16h-12a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h38a2 2 0 0 0 2-2V82a2 2 0 0 0-2-2zm-18-16a4 4 0 1 1 8 0v16h-8zm0 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <input id="passwordInput" name="password" type="password" autocomplete="current-password" placeholder="En az 8 karakter" required>
+          </div>
+        </label>
+        <button class="primary-btn submit-btn" type="submit">
+          <span>Giriş Yap</span>
+          <svg class="btn-spinner hidden" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="32" /></svg>
+        </button>
+        <p id="authMessage" class="form-message" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <aside class="auth-preview" aria-hidden="true">
+      <div class="cosmic-bg">
+        <div class="glow-sphere sphere-1"></div>
+        <div class="glow-sphere sphere-2"></div>
+      </div>
+      <div class="preview-shell">
+        <div class="preview-top">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="preview-hero">
+          <div>
+            <p class="preview-eyebrow">Aktif Sprint Durumu</p>
+            <h3>Yayın Hazırlığı</h3>
+          </div>
+          <strong>87%</strong>
+        </div>
+        <div class="preview-grid">
+          <div class="preview-column">
+            <div class="preview-card"><span></span><div class="mini-bar"></div></div>
+            <div class="preview-card"><span></span><div class="mini-bar bg-purple"></div></div>
+          </div>
+          <div class="preview-column">
+            <div class="preview-card"><span></span><div class="mini-bar bg-blue"></div></div>
+          </div>
+          <div class="preview-calendar">
+            <i></i><i></i><i></i><i></i><i></i><i></i>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- APP VIEW -->
+  <main id="appView" class="app-shell hidden">
+    <aside class="sidebar">
+      <div class="brand-lockup compact">
+        <span class="brand-mark">
+          <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </span>
+        <div>
+          <h2>ProjectFlow</h2>
+          <div class="user-badge">
+            <div id="userAvatar" class="avatar-sm"></div>
+            <p id="userName"></p>
+          </div>
+        </div>
+      </div>
+
+      <section class="sidebar-section">
+        <div class="section-title">
+          <span>Projeler</span>
+          <button id="newProjectButton" class="icon-btn add-prj-btn" type="button" title="Yeni proje">
+            <svg><use href="#icon-add"></use></svg>
+          </button>
+        </div>
+        <div id="projectList" class="project-list"></div>
+      </section>
+
+      <button id="logoutButton" class="ghost-btn logout-btn" type="button">
+        <svg><use href="#icon-logout"></use></svg>
+        <span>Çıkış yap</span>
+      </button>
+    </aside>
+
+    <section class="workspace">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Proje panosu</p>
+          <h1 id="projectTitle">Görevler</h1>
+          <p id="projectDescription" class="muted"></p>
+        </div>
+        <div class="topbar-actions">
+          <button id="newNoteButton" class="secondary-btn" type="button">
+            <svg class="btn-icon"><use href="#icon-calendar"></use></svg>
+            <span>Takvim Notu</span>
+          </button>
+          <button id="newTaskButton" class="primary-btn" type="button">
+            <svg class="btn-icon"><use href="#icon-add"></use></svg>
+            <span>Yeni Görev</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="metrics-row">
+        <article class="metric-card">
+          <div class="metric-info">
+            <span>Toplam İş</span>
+            <strong id="metricTotal">0</strong>
+          </div>
+          <div class="metric-icon bg-indigo">
+            <svg><use href="#icon-project"></use></svg>
+          </div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-info">
+            <span>Devam Eden</span>
+            <strong id="metricActive">0</strong>
+          </div>
+          <div class="metric-icon bg-blue">
+            <svg><use href="#icon-clock"></use></svg>
+          </div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-info">
+            <span>Code Review</span>
+            <strong id="metricReview">0</strong>
+          </div>
+          <div class="metric-icon bg-amber">
+            <svg><use href="#icon-warning"></use></svg>
+          </div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-info">
+            <span>Tamamlanan</span>
+            <strong id="metricDone">0</strong>
+          </div>
+          <div class="metric-icon bg-green">
+            <svg><use href="#icon-check"></use></svg>
+          </div>
+        </article>
+      </section>
+
+      <nav class="view-tabs" aria-label="Proje görünümleri">
+        <button id="boardTab" class="view-tab active" type="button">
+          <svg class="tab-icon"><use href="#icon-board"></use></svg>
+          <span>Pano</span>
+        </button>
+        <button id="listTab" class="view-tab" type="button">
+          <svg class="tab-icon"><use href="#icon-list"></use></svg>
+          <span>Liste</span>
+        </button>
+        <button id="calendarTab" class="view-tab" type="button">
+          <svg class="tab-icon"><use href="#icon-calendar"></use></svg>
+          <span>Takvim</span>
+        </button>
+      </nav>
+
+      <div class="view-stack">
+        <!-- LIST VIEW -->
+        <section id="listView" class="view-panel list-panel hidden">
+          <div class="view-head">
+            <div>
+              <p class="eyebrow">Liste görünümü</p>
+              <h2>Tüm Görevler</h2>
+            </div>
+            <span id="listSummary" class="summary-pill">0 kayıt</span>
+          </div>
+          <div class="toolbar">
+            <div class="search-box">
+              <svg class="search-icon"><use href="#icon-search"></use></svg>
+              <input id="listSearchInput" placeholder="Görev, kişi veya açıklama ara...">
+            </div>
+            <div class="filter-box">
+              <svg class="filter-icon"><use href="#icon-filter"></use></svg>
+              <select id="listPriorityFilter" aria-label="Liste öncelik filtresi">
+                <option value="">Tüm Öncelikler</option>
+                <option value="urgent">Acil</option>
+                <option value="high">Yüksek</option>
+                <option value="medium">Orta</option>
+                <option value="low">Düşük</option>
+              </select>
+            </div>
+          </div>
+          <div class="task-table-wrapper">
+            <div class="task-table" role="table" aria-label="Görev listesi">
+              <div class="task-table-row task-table-head" role="row">
+                <span>Görev Başlığı</span>
+                <span>Durum</span>
+                <span>Öncelik</span>
+                <span>Termin</span>
+                <span>Atanan</span>
+              </div>
+              <div id="taskTableBody"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- BOARD VIEW -->
+        <section id="boardView" class="view-panel board-panel">
+          <div class="toolbar">
+            <div class="search-box">
+              <svg class="search-icon"><use href="#icon-search"></use></svg>
+              <input id="searchInput" placeholder="Görev, kişi veya açıklama ara...">
+            </div>
+            <div class="filter-box">
+              <svg class="filter-icon"><use href="#icon-filter"></use></svg>
+              <select id="priorityFilter" aria-label="Öncelik filtresi">
+                <option value="">Tüm Öncelikler</option>
+                <option value="urgent">Acil</option>
+                <option value="high">Yüksek</option>
+                <option value="medium">Orta</option>
+                <option value="low">Düşük</option>
+              </select>
+            </div>
+          </div>
+          <section id="board" class="board" aria-live="polite"></section>
+        </section>
+
+        <!-- CALENDAR VIEW -->
+        <section id="calendarView" class="view-panel calendar-view hidden">
+          <aside class="calendar-panel">
+            <div class="calendar-header">
+              <div>
+                <p class="eyebrow">Planlayıcı</p>
+                <h2 id="calendarMonthLabel">Ay</h2>
+              </div>
+              <div class="month-controls">
+                <button id="prevMonthButton" class="icon-btn" type="button" title="Önceki ay">
+                  <svg><use href="#icon-chevron-left"></use></svg>
+                </button>
+                <button id="nextMonthButton" class="icon-btn" type="button" title="Sonraki ay">
+                  <svg><use href="#icon-chevron-right"></use></svg>
+                </button>
+              </div>
+            </div>
+            <div class="calendar-weekdays">
+              <span>Pzt</span><span>Sal</span><span>Çar</span><span>Per</span><span>Cum</span><span>Cmt</span><span>Paz</span>
+            </div>
+            <div id="calendarGrid" class="calendar-grid"></div>
+          </aside>
+          <aside class="calendar-panel notes-panel">
+            <div class="notes-header">
+              <h3 id="selectedDateLabel">Seçili Gün</h3>
+              <button id="quickNoteButton" class="text-btn" type="button">
+                <svg class="btn-icon"><use href="#icon-add"></use></svg>
+                <span>Not Ekle</span>
+              </button>
+            </div>
+            <div id="noteList" class="note-list"></div>
+          </aside>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- DIALOGS / MODALS -->
+  <dialog id="projectDialog" class="modal">
+    <form id="projectForm" method="dialog">
+      <header>
+        <div class="dialog-title-wrapper">
+          <svg class="dialog-title-icon"><use href="#icon-project"></use></svg>
+          <h2>Yeni Proje</h2>
+        </div>
+        <button value="cancel" class="close-modal-btn icon-btn" type="button" data-close="projectDialog" aria-label="Kapat">
+          <svg><use href="#icon-close"></use></svg>
+        </button>
+      </header>
+      <div class="dialog-body">
+        <label>
+          <span>Proje Adı</span>
+          <input id="projectNameInput" required placeholder="Örn: E-Ticaret Yenileme">
+        </label>
+        <label>
+          <span>Kısa Kod (Key)</span>
+          <input id="projectKeyInput" maxlength="6" placeholder="Örn: ETC">
+        </label>
+        <label>
+          <span>Açıklama</span>
+          <textarea id="projectDescriptionInput" rows="3" placeholder="Projenin hedefleri ve genel kapsamı..."></textarea>
+        </label>
+      </div>
+      <footer>
+        <button class="primary-btn submit-btn" type="submit">Projeyi Oluştur</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="taskDialog" class="modal">
+    <form id="taskForm" method="dialog">
+      <header>
+        <div class="dialog-title-wrapper">
+          <svg class="dialog-title-icon"><use href="#icon-board"></use></svg>
+          <h2>Yeni Görev</h2>
+        </div>
+        <button value="cancel" class="close-modal-btn icon-btn" type="button" data-close="taskDialog" aria-label="Kapat">
+          <svg><use href="#icon-close"></use></svg>
+        </button>
+      </header>
+      <div class="dialog-body">
+        <label>
+          <span>Başlık</span>
+          <input id="taskTitleInput" required placeholder="Görev ne hakkında?">
+        </label>
+        <label>
+          <span>Açıklama</span>
+          <textarea id="taskDescriptionInput" rows="3" placeholder="Görevin detaylı açıklaması..."></textarea>
+        </label>
+        <div class="field-grid">
+          <label>
+            <span>Durum</span>
+            <select id="taskStatusInput"></select>
+          </label>
+          <label>
+            <span>Öncelik</span>
+            <select id="taskPriorityInput"></select>
+          </label>
+        </div>
+        <div class="field-grid">
+          <label>
+            <span>Atanan Kişi</span>
+            <input id="taskAssigneeInput" placeholder="Kullanıcı Adı">
+          </label>
+          <label>
+            <span>Termin Tarihi</span>
+            <input id="taskDueDateInput" type="date">
+          </label>
+        </div>
+      </div>
+      <footer>
+        <button class="primary-btn submit-btn" type="submit">Görevi Ekle</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="noteDialog" class="modal">
+    <form id="noteForm" method="dialog">
+      <header>
+        <div class="dialog-title-wrapper">
+          <svg class="dialog-title-icon"><use href="#icon-calendar"></use></svg>
+          <h2>Takvim Notu</h2>
+        </div>
+        <button value="cancel" class="close-modal-btn icon-btn" type="button" data-close="noteDialog" aria-label="Kapat">
+          <svg><use href="#icon-close"></use></svg>
+        </button>
+      </header>
+      <div class="dialog-body">
+        <label>
+          <span>Tarih</span>
+          <input id="noteDateInput" type="date" required>
+        </label>
+        <label>
+          <span>Başlık</span>
+          <input id="noteTitleInput" required placeholder="Yayın penceresi, planlama, kritik karar...">
+        </label>
+        <label>
+          <span>Not Tipi (Tonu)</span>
+          <select id="noteToneInput"></select>
+        </label>
+        <label>
+          <span>Detay</span>
+          <textarea id="noteBodyInput" rows="4" placeholder="Notun içeriği..."></textarea>
+        </label>
+      </div>
+      <footer>
+        <button class="primary-btn submit-btn" type="submit">Notu Kaydet</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <script src="/app.js"></script>
+</body>
+</html>
