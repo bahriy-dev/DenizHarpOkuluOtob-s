@@ -197,6 +197,7 @@ export default function DepartureBoard() {
   const [baseDepartures, setBaseDepartures] = useState<BusDeparture[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [fetchedAtSimTime, setFetchedAtSimTime] = useState<Date | null>(null);
+  const [activeTab, setActiveTab] = useState<"departure" | "lines" | "route" | "info">("departure");
 
   const fetchDepartures = useCallback(async () => {
     setIsLoading(true);
@@ -297,7 +298,7 @@ export default function DepartureBoard() {
   return (
     <main className="min-h-dvh flex flex-col bg-[#000000] text-[#f4f4f7] selection:bg-white/10 relative overflow-hidden font-sans antialiased">
       {/* ─── HEADER (iOS Navigation Bar Design) ─────────────────────────────────── */}
-      <header className="flex-shrink-0 px-4 pt-6 pb-4 sm:px-6 sm:pt-8 bg-[#000000] border-b border-white/[0.04]">
+      <header className="flex-shrink-0 px-4 pt-6 pb-3 sm:px-6 sm:pt-8 bg-[#000000]">
         <div className="max-w-xl mx-auto flex items-end justify-between gap-4">
           
           {/* iOS Large Navigation Title Style */}
@@ -335,58 +336,252 @@ export default function DepartureBoard() {
         </div>
       </header>
 
-      {/* ─── DEPARTURES LIST (iOS Grouped List View) ───────────────────────────── */}
-      <section className="flex-1 px-4 py-4 sm:px-6 overflow-y-auto bg-[#000000]">
-        <div className="max-w-xl mx-auto space-y-3 sm:space-y-4">
-          
-          {/* iOS Grouped List Header Label */}
-          <div className="flex items-center justify-between px-1.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#8e8e93]">
-            <span>Yaklaşan Seferler</span>
-            <span className="font-mono text-[9px] tracking-normal font-semibold">DURAK: 225981</span>
-          </div>
-
-          {/* Grouped Cards Stack */}
-          {!mounted || isLoading ? (
-            <div className="space-y-3 sm:space-y-4">
-              {[...Array(5)].map((_, i) => (
-                <div
-                  key={i}
-                  className="relative overflow-hidden rounded-2xl border border-white/[0.03] bg-[#1c1c1e] px-4 py-5 flex items-center justify-between gap-4 animate-pulse"
+      {/* ─── iOS SEGMENTED CONTROL TABS ─────────────────────────────────── */}
+      <div className="px-4 py-2 sm:px-6 bg-[#000000] border-b border-white/[0.04] flex-shrink-0">
+        <div className="max-w-xl mx-auto">
+          <div className="bg-[#1c1c1e] p-1 rounded-2xl flex items-center justify-between gap-1 border border-white/[0.04] relative">
+            {[
+              { id: "departure", label: "Anlık Durak" },
+              { id: "lines", label: "Geçen Hatlar" },
+              { id: "route", label: "Durak Konumu" },
+              { id: "info", label: "Durak Hakkında" },
+            ].map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as any)}
+                  className="flex-1 relative py-2 rounded-xl text-[10px] sm:text-xs font-bold tracking-tight transition-all duration-200 cursor-pointer z-10 text-center"
+                  style={{
+                    color: isActive ? "#ffffff" : "#8e8e93",
+                  }}
                 >
-                  <div className="flex items-center gap-3.5 flex-1">
-                    <div className="w-11 h-11 sm:w-12.5 sm:h-12.5 rounded-xl bg-white/[0.02]" />
-                    <div className="flex-1 space-y-2">
-                      <div className="h-4 bg-white/[0.03] rounded w-1/3" />
-                      <div className="h-3 bg-white/[0.02] rounded w-1/4" />
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeTabIndicator"
+                      className="absolute inset-0 bg-white/[0.08] border border-white/[0.05] rounded-xl shadow-sm"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-20">{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* ─── MAIN TAB CONTENT AREA ───────────────────────────── */}
+      <section className="flex-1 px-4 py-4 sm:px-6 overflow-y-auto bg-[#000000]">
+        <div className="max-w-xl mx-auto">
+          <AnimatePresence mode="wait">
+            {/* Tab 1: Anlık Durak Bilgileri */}
+            {activeTab === "departure" && (
+              <motion.div
+                key="departure"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-3 sm:space-y-4"
+              >
+                {/* iOS Grouped List Header Label */}
+                <div className="flex items-center justify-between px-1.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#8e8e93]">
+                  <span>Yaklaşan Seferler</span>
+                  <span className="font-mono text-[9px] tracking-normal font-semibold">DURAK: 225981</span>
+                </div>
+
+                {/* Grouped Cards Stack */}
+                {!mounted || isLoading ? (
+                  <div className="space-y-3 sm:space-y-4">
+                    {[...Array(5)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="relative overflow-hidden rounded-2xl border border-white/[0.03] bg-[#1c1c1e] px-4 py-5 flex items-center justify-between gap-4 animate-pulse"
+                      >
+                        <div className="flex items-center gap-3.5 flex-1">
+                          <div className="w-11 h-11 sm:w-12.5 sm:h-12.5 rounded-xl bg-white/[0.02]" />
+                          <div className="flex-1 space-y-2">
+                            <div className="h-4 bg-white/[0.03] rounded w-1/3" />
+                            <div className="h-3 bg-white/[0.02] rounded w-1/4" />
+                          </div>
+                        </div>
+                        <div className="w-16 h-9 bg-white/[0.02] rounded-full" />
+                      </div>
+                    ))}
+                  </div>
+                ) : filteredDepartures.length === 0 ? (
+                  <div className="text-center py-20 bg-[#1c1c1e] border border-white/[0.03] rounded-2xl">
+                    <div className="text-3xl mb-3">🌙</div>
+                    <p className="text-[#8e8e93] text-sm font-semibold tracking-tight">
+                      Şu an aktif sefer bulunmuyor
+                    </p>
+                    <p className="text-white/20 text-xs mt-1">
+                      Planlanmış seferlerin kalkış saatleri geçmiş olabilir.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-3 sm:space-y-4">
+                    <AnimatePresence mode="popLayout">
+                      {filteredDepartures.map((departure, index) => (
+                        <DepartureCard
+                          key={departure.id}
+                          departure={departure}
+                          index={index}
+                        />
+                      ))}
+                    </AnimatePresence>
+                  </div>
+                )}
+              </motion.div>
+            )}
+
+            {/* Tab 2: Duraktan Geçen Otobüsler */}
+            {activeTab === "lines" && (
+              <motion.div
+                key="lines"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-3"
+              >
+                {/* iOS Grouped List Header Label */}
+                <div className="flex items-center justify-between px-1.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#8e8e93] mb-1">
+                  <span>Duraktan Geçen Hatlar</span>
+                  <span className="font-mono text-[9px] tracking-normal font-semibold">İETT OTOBÜS HATLARI</span>
+                </div>
+
+                {[
+                  { code: "133P", dest: "TEPEÖREN MERKEZ / AKFIRAT", desc: "Deniz Harp Okulu - İçmeler - Orhanlı - Akfırat", color: "#30d158" },
+                  { code: "KM12", dest: "KARTAL METRO", desc: "Tuzla Depo - Tuzla Marina - İçmeler - Pendik - Kartal Metro", color: "#0a84ff" },
+                  { code: "130A", dest: "KADIKÖY", desc: "Tuzla Depo - D-100 - Pendik - Maltepe - Bostancı - Kadıköy", color: "#af52de" },
+                  { code: "130T", dest: "TUZLA İÇMELER", desc: "Tuzla Marina - Tuzla İstasyon - İçmeler Köprüsü", color: "#64d2ff" },
+                  { code: "132H", dest: "PENDİK YHT", desc: "Sabiha Gökçen Havalimanı - Pendik Metro - Deniz Harp Okulu", color: "#ff9f0a" },
+                  { code: "131M", dest: "MALTEPE", desc: "Tuzla Depo - Güzelyalı - Pendik Merkez - Maltepe", color: "#ff453a" },
+                  { code: "KM22", dest: "KARTAL METRO", desc: "Tuzla Depo - Tuzla Marina - İçmeler Metro - Kartal Metro", color: "#64d2ff" },
+                ].map((line) => (
+                  <div
+                    key={line.code}
+                    className="bg-[#1c1c1e] p-4 rounded-2xl border border-white/[0.04] flex items-center justify-between gap-4 hover:bg-[#2c2c2e] transition-all"
+                  >
+                    <div className="flex items-center gap-4 min-w-0">
+                      <div
+                        className="w-12 h-12 rounded-xl flex items-center justify-center font-extrabold text-sm tracking-tight flex-shrink-0"
+                        style={{
+                          backgroundColor: `${line.color}15`,
+                          color: line.color,
+                          border: `1px solid ${line.color}30`,
+                        }}
+                      >
+                        {line.code}
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="text-white text-[15px] font-bold tracking-tight truncate">
+                          {line.dest}
+                        </h3>
+                        <p className="text-[#8e8e93] text-xs font-medium mt-0.5 truncate">
+                          {line.desc}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="text-[10px] text-[#30d158] bg-[#30d158]/10 border border-[#30d158]/15 px-2.5 py-1 rounded-full font-bold uppercase tracking-wider flex-shrink-0">
+                      Aktif
                     </div>
                   </div>
-                  <div className="w-16 h-9 bg-white/[0.02] rounded-full" />
-                </div>
-              ))}
-            </div>
-          ) : filteredDepartures.length === 0 ? (
-            <div className="text-center py-20 bg-[#1c1c1e] border border-white/[0.03] rounded-2xl">
-              <div className="text-3xl mb-3">🌙</div>
-              <p className="text-[#8e8e93] text-sm font-semibold tracking-tight">
-                Şu an aktif sefer bulunmuyor
-              </p>
-              <p className="text-white/20 text-xs mt-1">
-                Planlanmış seferlerin kalkış saatleri geçmiş olabilir.
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-3 sm:space-y-4">
-              <AnimatePresence mode="popLayout">
-                {filteredDepartures.map((departure, index) => (
-                  <DepartureCard
-                    key={departure.id}
-                    departure={departure}
-                    index={index}
-                  />
                 ))}
-              </AnimatePresence>
-            </div>
-          )}
+              </motion.div>
+            )}
+
+            {/* Tab 3: Durak Konumu */}
+            {activeTab === "route" && (
+              <motion.div
+                key="route"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-4"
+              >
+                {/* iOS Grouped List Header Label */}
+                <div className="flex items-center justify-between px-1.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#8e8e93]">
+                  <span>Harita Konumu</span>
+                  <span className="font-mono text-[9px] tracking-normal font-semibold">TUZLA / İSTANBUL</span>
+                </div>
+
+                <div className="relative overflow-hidden rounded-3xl border border-white/[0.04] bg-[#1c1c1e] aspect-video w-full shadow-lg">
+                  <iframe
+                    title="Durak Konumu Map"
+                    src="https://maps.google.com/maps?q=40.814013,29.266184&z=16&output=embed&iwloc=near"
+                    className="w-full h-full border-0"
+                    style={{
+                      filter: "invert(90%) hue-rotate(180deg) brightness(95%) contrast(110%)",
+                    }}
+                    allowFullScreen
+                    loading="lazy"
+                  />
+                  <div className="absolute bottom-3 left-3 bg-black/80 backdrop-blur-md border border-white/[0.04] px-3.5 py-2 rounded-xl text-[10px] sm:text-xs font-bold tracking-tight text-white flex items-center gap-2">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#30d158] animate-ping" />
+                    <span>Deniz Harp Okulu Durağı</span>
+                  </div>
+                </div>
+                
+                <div className="bg-[#1c1c1e] p-4 rounded-2xl border border-white/[0.04] flex items-start gap-3">
+                  <span className="text-xl">📍</span>
+                  <div>
+                    <h4 className="text-white text-sm font-bold tracking-tight">Durak Adresi</h4>
+                    <p className="text-[#8e8e93] text-xs font-medium mt-0.5 leading-relaxed">
+                      Tuzla Depo Yolu, Deniz Harp Okulu Yerleşkesi Girişi Önü, Tuzla / İstanbul.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Tab 4: Durak Hakkında */}
+            {activeTab === "info" && (
+              <motion.div
+                key="info"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-4"
+              >
+                {/* iOS Grouped List Header Label */}
+                <div className="flex items-center justify-between px-1.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#8e8e93]">
+                  <span>Fiziki Özellikler</span>
+                  <span className="font-mono text-[9px] tracking-normal font-semibold">DURAK KARTI</span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    { title: "Durak Kodu", value: "225981", icon: "🆔" },
+                    { title: "İlçe", value: "Tuzla", icon: "🏙️" },
+                    { title: "Fiziki Durum", value: "KAPALI (Kabin)", icon: "🏠" },
+                    { title: "Akıllı Durak", value: "YOK", icon: "📡" },
+                    { title: "Bölge", value: "Anadolu", icon: "🗺️" },
+                    { title: "Veri Kaynağı", value: "Canlı İETT API", icon: "⚡" },
+                  ].map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="bg-[#1c1c1e] p-4 rounded-2xl border border-white/[0.04] flex flex-col justify-between gap-3 hover:bg-[#2c2c2e] transition-all"
+                    >
+                      <span className="text-2xl">{item.icon}</span>
+                      <div>
+                        <span className="text-[#8e8e93] text-[10px] sm:text-xs font-bold uppercase tracking-wider block">
+                          {item.title}
+                        </span>
+                        <span className="text-white text-sm sm:text-base font-extrabold tracking-tight block mt-0.5">
+                          {item.value}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </section>
 
