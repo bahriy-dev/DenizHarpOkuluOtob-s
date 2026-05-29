@@ -585,29 +585,29 @@ export default function DepartureBoard() {
         </div>
       </section>
 
-      {/* ─── PREMIUM FOOTER (Apple Styled Glassmorphic Card) ──────────────────────── */}
-      <footer className="flex-shrink-0 bg-[#000000] py-6 px-4 pb-8 sm:pb-10 border-t border-white/[0.04]">
-        <div className="relative max-w-2xl mx-auto overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl px-6 py-5 shadow-[0_0_60px_rgba(255,255,255,0.03)]">
+      {/* ─── PREMIUM FOOTER (Apple Styled Glassmorphic Card - Micro Size) ──────────────────────── */}
+      <footer className="flex-shrink-0 bg-[#000000] py-4 px-4 pb-6 border-t border-white/[0.04]">
+        <div className="relative max-w-lg mx-auto overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl px-4 py-3 shadow-[0_0_40px_rgba(255,255,255,0.02)]">
           {/* Glow */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] via-transparent to-white/[0.02] pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] via-transparent to-white/[0.01] pointer-events-none" />
 
           {/* Top blur orb */}
-          <div className="absolute -top-20 -right-20 w-52 h-52 bg-white/5 blur-3xl rounded-full" />
+          <div className="absolute -top-10 -right-10 w-28 h-28 bg-white/[0.02] blur-2xl rounded-full" />
 
-          <div className="relative z-10 flex flex-col gap-4">
+          <div className="relative z-10 flex flex-col gap-2.5">
             {/* Main text */}
-            <div className="flex items-start gap-3">
-              <div className="mt-1 flex h-7 w-7 items-center justify-center rounded-full bg-white/5 border border-white/10 shadow-inner flex-shrink-0">
-                <span className="text-xs">⚡</span>
+            <div className="flex items-start gap-2.5">
+              <div className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-white/5 border border-white/10 shadow-inner flex-shrink-0">
+                <span className="text-[9px]">⚡</span>
               </div>
 
               <div className="flex flex-col">
-                <span className="text-[10px] tracking-[0.35em] uppercase text-zinc-500 font-bold">
+                <span className="text-[8px] tracking-[0.25em] uppercase text-zinc-500 font-bold">
                   Software Architecture
                 </span>
-                <p className="mt-1 text-sm sm:text-[15px] leading-relaxed text-zinc-300">
+                <p className="mt-0.5 text-[11px] sm:text-xs leading-relaxed text-zinc-300">
                   Bu proje, modern yazılım mimarisi ve dijital deneyim odaklı yaklaşımıyla{" "}
-                  <span className="font-black bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
+                  <span className="font-extrabold bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
                     Bahri YILMAZ
                   </span>{" "}
                   tarafından geliştirilmiştir.
@@ -619,37 +619,37 @@ export default function DepartureBoard() {
             <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
             {/* Bottom */}
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               {/* Status */}
-              <div className="flex items-center gap-2 text-[11px] tracking-widest uppercase text-zinc-500 font-semibold">
-                <span className="relative flex h-2 w-2">
+              <div className="flex items-center gap-1.5 text-[9px] tracking-wider uppercase text-zinc-500 font-semibold">
+                <span className="relative flex h-1.5 w-1.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
                 </span>
                 <span>System Active • All Rights Reserved</span>
               </div>
 
               {/* Social */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 {/* Instagram */}
                 <a
                   href="https://instagram.com/bahriyiilmaz"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-3 py-1.5 text-zinc-400 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05] hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] cursor-pointer"
+                  className="group flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.01] px-2 py-1 text-zinc-400 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.04] hover:text-white hover:shadow-[0_0_15px_rgba(255,255,255,0.03)] cursor-pointer"
                 >
                   <svg
-                    className="w-3.5 h-3.5 transition-transform duration-300 group-hover:scale-110"
+                    className="w-3 h-3 transition-transform duration-300 group-hover:scale-105"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    strokeWidth="2"
+                    strokeWidth={2}
                   >
                     <rect x="2" y="2" width="20" height="20" rx="5" />
                     <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
                     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
                   </svg>
-                  <span className="text-[11px] font-semibold">@bahriyiilmaz</span>
+                  <span className="text-[9px] font-semibold">@bahriyiilmaz</span>
                 </a>
 
                 {/* Github */}
@@ -657,10 +657,10 @@ export default function DepartureBoard() {
                   href="https://github.com/bahriy-dev"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-3 py-1.5 text-zinc-400 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05] hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] cursor-pointer"
+                  className="group flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.01] px-2 py-1 text-zinc-400 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.04] hover:text-white hover:shadow-[0_0_15px_rgba(255,255,255,0.03)] cursor-pointer"
                 >
                   <svg
-                    className="w-3.5 h-3.5 transition-transform duration-300 group-hover:scale-110"
+                    className="w-3 h-3 transition-transform duration-300 group-hover:scale-105"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -670,7 +670,7 @@ export default function DepartureBoard() {
                       d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.193 22 16.44 22 12.017 22 6.484 17.522 2 12 2z"
                     />
                   </svg>
-                  <span className="text-[11px] font-semibold">bahriy-dev</span>
+                  <span className="text-[9px] font-semibold">bahriy-dev</span>
                 </a>
               </div>
             </div>
